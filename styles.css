@@ -1,0 +1,46 @@
+#charContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    background-color: aqua;
+    gap: 20px;
+}
+
+.char-image {
+height: 100px;
+width: 100px;
+border-radius: 25px;
+
+
+}
+
+.card {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.liked-container {
+    display: flex;
+    background-color: blueviolet;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+
+}
+
+.chartwo-image {
+    height: 50px;
+    width: 50px;
+}
+
+.liked-card {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    background-color: blue;
+}
