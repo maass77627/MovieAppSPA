@@ -1,14 +1,34 @@
 console.log("SCRIPT IS WORKING");
 
+class Character {
+  constructor(character) {
+    this.name = character.fullName;
+    this.nickname = character.nickname;
+    this.house = character.hogwartsHouse;
+    this.birthdate = character.birthdate;
+    this.children = character.children;
+    this.image = character.image;
+    this.actor = character.interpretedBy;
+  }
+
+  getDisplayName() {
+    return this.nickname
+      ? `${this.name} "${this.nickname}"`
+      : this.name;
+  }
+
+//   isHouse(house) {
+//     return this.house === house;
+//   }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
 let characterContainer = document.getElementById(("charContainer"))
-    let characters
-    let likedCharacters = []
+    let characters, spells, houses, books
+    let likedCharacters = JSON.parse(localStorage.getItem("liked")) || []
     let likedContainer = document.getElementById("liked-container")
-    // likedCharacters.forEach((char) => {
-    //    loadLikedCharacters(char)
-    //   })
+    
 
     let input = document.getElementById("search")
     input.addEventListener("input", () => {
@@ -26,12 +46,41 @@ let characterContainer = document.getElementById(("charContainer"))
    .then((res) => res.json())
    .then((json) => {console.log(json)
 
-    characters = json
+       characters = json.map((char) => {
+        return new Character(char)
+       })
+
+    // characters = json
       characters.forEach((char) => {
        loadCharacterCards(char)
       })
       })
     
+
+      fetch("https://potterapi-fedeperin.vercel.app/en/spells")
+  .then((res) => res.json())
+  .then((spells) => {
+    console.log(spells);
+    spells = json
+    spells.forEach((spell) => {
+     loadSpells(spell)
+    })
+    
+  });
+
+  fetch("https://potterapi-fedeperin.vercel.app/en/houses")
+  .then((res) => res.json())
+  .then((json) => {
+    houses = json;
+    console.log(houses);
+  });
+
+  fetch("https://potterapi-fedeperin.vercel.app/en/books")
+  .then((res) => res.json())
+  .then((json) => {
+    books = json;
+    console.log(books);
+  });
 
 
 
@@ -60,7 +109,7 @@ let h1 = document.createElement("h1")
 
 h1.innerText = character.nickname
 let house = document.createElement("p")
-house.innerText = character.hogwartsHouse
+house.innerText = character.house
     let div = document.createElement("div")
     div.className = "card"
     
@@ -86,15 +135,33 @@ function loadLikedCharacters(character) {
     console.log(character.image)
     let card = document.createElement("div")
     card.className = "liked-card"
+    let button = document.createElement("button")
+    button.addEventListener("click", () => {
+        console.log("deleting")
+       likedCharacters = likedCharacters.filter((char) => char.id !== character.id)
+       localStorage.setItem("liked", JSON.stringify(likedCharacters))
+       card.remove()
+       likedCharacters.forEach((char) => loadLikedCharacters(char))
+      
+    })
+    button.innerText = "delete"
     let p = document.createElement("p")
     let image = document.createElement("img")
    image.className = "chartwo-image"
    image.src = character.image
-    p.innerText = character.name
+    p.innerText = character.nickname
+    card.appendChild(button)
     card.appendChild(image)
     card.appendChild(p)
     likedContainer.appendChild(card)
 
 }
+
+function loadSpells(spell) {
+
+
+}
+
+
 
 })
