@@ -11,24 +11,36 @@ class Character {
     this.actor = character.interpretedBy;
   }
 
-  getDisplayName() {
-    return this.nickname
-      ? `${this.name} "${this.nickname}"`
-      : this.name;
-  }
+//   getDisplayName() {
+//     return this.nickname
+//       ? `${this.name} "${this.nickname}"`
+//       : this.name;
+//   }
 
 //   isHouse(house) {
 //     return this.house === house;
 //   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {     
+    let characterContainer = document.getElementById(("charContainer"))
+    let spellsContainer = document.getElementById(("spell-container"))
+    let bookContainer = document.getElementById(("book-container"))
+    let houseContainer = document.getElementById(("house-container"))
 
-let characterContainer = document.getElementById(("charContainer"))
     let characters, spells, houses, books
+    const userChoices = {
+        spell: "",
+        house: "",
+        book: "",
+    }
     let likedCharacters = JSON.parse(localStorage.getItem("liked")) || []
     let likedContainer = document.getElementById("liked-container")
-    
+    // let spellbutton = document.getElementById("spell-button")
+    // spellbutton.addEventListener("click", () => {
+    //          console.log(spellbutton.innerText)
+             
+    // })
 
     let input = document.getElementById("search")
     input.addEventListener("input", () => {
@@ -59,10 +71,10 @@ let characterContainer = document.getElementById(("charContainer"))
 
       fetch("https://potterapi-fedeperin.vercel.app/en/spells")
   .then((res) => res.json())
-  .then((spells) => {
-    console.log(spells);
+  .then((json) => {
+    console.log(json);
     spells = json
-    spells.forEach((spell) => {
+    spells.slice(0, 10).forEach((spell) => {
      loadSpells(spell)
     })
     
@@ -73,6 +85,10 @@ let characterContainer = document.getElementById(("charContainer"))
   .then((json) => {
     houses = json;
     console.log(houses);
+    houses.forEach((house) => {
+      loadHouses(house)
+    })
+    // loadHouses(house)
   });
 
   fetch("https://potterapi-fedeperin.vercel.app/en/books")
@@ -115,6 +131,7 @@ house.innerText = character.house
     
     let p = document.createElement("p")
     p.innerText = character.name
+    
    let image = document.createElement("img")
    image.className = "char-image"
    image.src = character.image
@@ -130,6 +147,7 @@ house.innerText = character.house
 }
 
 function loadLikedCharacters(character) {
+   
     console.log(character)
     console.log("liked container")
     console.log(character.image)
@@ -158,10 +176,44 @@ function loadLikedCharacters(character) {
 }
 
 function loadSpells(spell) {
+console.log(spell)
+ let spellsdiv = document.getElementById("spells")
+let button = document.createElement("button")
+
+button.className = "spell-button"
+
+
+button.innerText = `${spell.spell} \n\n ${spell.use}`
+
+//  let spellbutton = document.getElementById("spell-button")
+    button.addEventListener("click", () => {
+        spellsContainer.innerText = ""
+        // spellsContainer.remove()
+             console.log(button.innerText)
+             userChoices.spell = spell.spell
+             console.log(userChoices)
+             
+    })
+
+spellsdiv.appendChild(button)
 
 
 }
 
 
+function loadHouses(house) {
+let housecard = document.createElement("div")
+housecard.className = "house-card"
+let h1 = document.createElement("h5")
+h1.innerText = house.house
+let emoji = document.createElement("p")
+emoji.innerText = house.emoji
+housecard.appendChild(h1)
+housecard.appendChild(emoji)
+houseContainer.appendChild(housecard)
+
+
+
+}
 
 })

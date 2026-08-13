@@ -1,10 +1,19 @@
+.body {
+    background-image: url("./assets/starrynight.jpg");
+
+
+}
+
+
 #charContainer {
     display: flex;
     flex-direction: row;
+    
     width: 100%;
     height: 100%;
     background-color: aqua;
     gap: 20px;
+    overflow-y: auto;
 }
 
 .char-image {
@@ -43,4 +52,49 @@ border-radius: 25px;
     flex-direction: column;
     width: 100px;
     background-color: rgb(251, 251, 252);
+}
+
+.spell-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: rgb(19, 19, 45);
+    color: white;
+    border-radius: 20px;
+    gap:20px;
+    padding: 50px;
+}
+
+.heading-wrap {
+    color:white;
+    text-align: center;
+}
+.spell-button {
+    /* width: 300px; */
+    /* height: 200px;  */
+    /* font-weight: bold; */
+    width: 30%;
+    border-radius: 25px;
+    background-color: rgb(46, 28, 111);
+    color: aliceblue;
+}
+
+.spells{
+    display: flex;
+    gap: 10px;
+}
+
+.house-container {
+    width:100%;
+    display: flex;
+background-color: rgb(46, 28, 111);
+gap: 10px;
+}
+
+.house-card {
+background-color: aliceblue;
+width: 100px;
+
 }
