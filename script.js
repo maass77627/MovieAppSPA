@@ -5,21 +5,38 @@ class Character {
     this.name = character.fullName;
     this.nickname = character.nickname;
     this.house = character.hogwartsHouse;
-    this.birthdate = character.birthdate;
-    this.children = character.children;
     this.image = character.image;
-    this.actor = character.interpretedBy;
+    this.points = 0;
   }
 
-//   getDisplayName() {
-//     return this.nickname
-//       ? `${this.name} "${this.nickname}"`
-//       : this.name;
-//   }
+  addPoints(amount) {
+    this.points += amount;
+  }
 
-//   isHouse(house) {
-//     return this.house === house;
-//   }
+  removePoints(amount) {
+    this.points -= amount;
+  }
+
+  changeHouse(house) {
+    this.house = house;
+  }
+}
+
+
+class House {
+  constructor(house) {
+    this.name = house.house;
+    this.emoji = house.emoji;
+    this.points = 0;
+  }
+
+  addPoints(amount) {
+    this.points += amount;
+  }
+
+  removePoints(amount) {
+    this.points -= amount;
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {     
@@ -27,13 +44,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let spellsContainer = document.getElementById(("spell-container"))
     let bookContainer = document.getElementById(("book-container"))
     let houseContainer = document.getElementById(("house-container"))
-
+    let houseStanding = document.getElementById("house-standing")
     let characters, spells, houses, books
-    const userChoices = {
-        spell: "",
-        house: "",
-        book: "",
-    }
+    // const userChoices = {
+    //     spell: "",
+    //     house: "",
+    //     book: "",
+    // }
     let likedCharacters = JSON.parse(localStorage.getItem("liked")) || []
     let likedContainer = document.getElementById("liked-container")
     // let spellbutton = document.getElementById("spell-button")
@@ -83,10 +100,15 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch("https://potterapi-fedeperin.vercel.app/en/houses")
   .then((res) => res.json())
   .then((json) => {
-    houses = json;
+
+    houses = json.map((house) => {
+      return new House(house)
+    })
+    // houses = json;
     console.log(houses);
     houses.forEach((house) => {
       loadHouses(house)
+      loadHouseStanding(house)
     })
     // loadHouses(house)
   });
@@ -208,10 +230,43 @@ let h1 = document.createElement("h5")
 h1.innerText = house.house
 let emoji = document.createElement("p")
 emoji.innerText = house.emoji
+// let p = document.createElement("p")
+// console.log(house.points)
+// p.innerText = house.points
+// let ptwo = document.createElement("p")
+// ptwo.innerText = house.house
+let button = document.createElement("button")
+// housecard.appendChild(p)
 housecard.appendChild(h1)
 housecard.appendChild(emoji)
 houseContainer.appendChild(housecard)
 
+
+
+}
+
+function loadHouseStanding(house) {
+    let card
+     console.log(house)
+     switch(house.name){
+        case "Gryffindor": 
+        card = document.getElementById("griff")
+        break
+        case "Hufflepuff": 
+         card = document.getElementById("huff")
+        break
+        case "Ravenclaw": 
+         card = document.getElementById("rav")
+        break
+        case "Slytherin": 
+         card = document.getElementById("slyth")
+        break
+     }
+    
+     let h1 = document.createElement("h1")
+console.log(house.points)
+h1.innerText = house.points
+card.appendChild(h1)
 
 
 }

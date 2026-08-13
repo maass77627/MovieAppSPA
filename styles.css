@@ -9,11 +9,12 @@
     display: flex;
     flex-direction: row;
     
-    width: 100%;
+    width: 60%;
     height: 100%;
-    background-color: aqua;
+    background-color: rgb(16, 12, 42);
     gap: 20px;
     overflow-y: auto;
+    scrollbar-width: none;
 }
 
 .char-image {
@@ -25,11 +26,16 @@ border-radius: 25px;
 }
 
 .card {
-    background-color: white;
+   padding: 50px;
+    background-color: rgb(16, 12, 42);
+    border-style: solid;
+    border-width: thin;
+    border-color: goldenrod;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: white;
 }
 
 
@@ -72,9 +78,7 @@ border-radius: 25px;
     text-align: center;
 }
 .spell-button {
-    /* width: 300px; */
-    /* height: 200px;  */
-    /* font-weight: bold; */
+    
     width: 30%;
     border-radius: 25px;
     background-color: rgb(46, 28, 111);
@@ -97,4 +101,81 @@ gap: 10px;
 background-color: aliceblue;
 width: 100px;
 
+}
+
+.house-standing {
+   color: goldenrod;
+    width: 400px;
+    height: 100%;
+    background-color: rgb(46, 28, 111);
+}
+
+.main {
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+}
+
+.hogwart-manager {
+   background-color: rgb(46, 28, 111);
+    width: 30%;
+    height: 100%;
+}
+
+.griff {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+background-color: rgb(48, 12, 12);
+width: 100%;
+ border-style: solid;
+    border-width: thin;
+    border-color: goldenrod;
+    border-radius: 25px;
+    color: goldenrod;
+}
+
+.slyth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+background-color: rgb(5, 55, 8);
+ border-style: solid;
+    border-width: thin;
+    border-color: goldenrod;
+    border-radius: 25px;
+    color: goldenrod;
+
+}
+
+.rav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+background-color: rgb(1, 1, 37);
+ border-style: solid;
+    border-width: thin;
+    border-color: goldenrod;
+    border-radius: 25px;
+    color: goldenrod;
+
+}
+
+.huff {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+background-color: darkgoldenrod;
+ border-style: solid;
+    border-width: thin;
+    border-color: goldenrod;
+    border-radius: 25px;
+    color: goldenrod;
+
+}
+
+.house-img {
+    width:100px;
+    height: 100px;
 }
