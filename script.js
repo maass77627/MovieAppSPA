@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function loadCharacterCards(character) {
 
-console.log(character.image)
+console.log(character)
 
 let button = document.createElement("button")
 button.innerText = "add like"
@@ -143,6 +143,19 @@ likedCharacters.forEach((char) => {
       })
 })
 
+let select = document.createElement("select")
+select.addEventListener("change", () => {
+  console.log(select.value)
+  character.hogwartsHouse = select.value
+})
+select.className = "select hidden"
+houses?.forEach((house) => {
+  select.classList.remove("hidden")
+    let option = document.createElement("option")
+    option.innerText = house.name
+    select.appendChild(option)
+})
+
 let h1 = document.createElement("h1")
 
 h1.innerText = character.nickname
@@ -157,14 +170,49 @@ house.innerText = character.house
    let image = document.createElement("img")
    image.className = "char-image"
    image.src = character.image
+
+     let ptwo = document.createElement("p")
+    ptwo.innerText = character.points
+
+   let buttontwo = document.createElement("button")
+buttontwo.innerText = "+ 1 point"
+buttontwo.addEventListener("click", () => {
+character.addPoints(1)
+ptwo.innerText = character.points
+console.log(character)
+})
+
+ let buttonthree = document.createElement("button")
+buttonthree.innerText = "- 1 point"
+buttonthree.addEventListener("click", () => {
+character.removePoints(1)
+ptwo.innerText = character.points
+console.log(character)
+
+})
+
+ let buttonfour = document.createElement("button")
+ buttonfour.addEventListener("click", () => {
+   
+ })
+buttonfour.innerText = "change house"
+
+
+
    div.appendChild(button)
    div.appendChild(h1)
    div.appendChild(p)
    div.appendChild(image)
    div.appendChild(house)
-    div.appendChild(p)
+   div.appendChild(ptwo)
+   div.appendChild(p)
+   div.appendChild(buttonthree)
+   div.appendChild(buttontwo)
+   div.appendChild(buttonfour)
+   div.appendChild(select)
 
     characterContainer.appendChild(div)
+    
 
 }
 
@@ -207,10 +255,10 @@ button.className = "spell-button"
 
 button.innerText = `${spell.spell} \n\n ${spell.use}`
 
-//  let spellbutton = document.getElementById("spell-button")
+
     button.addEventListener("click", () => {
         spellsContainer.innerText = ""
-        // spellsContainer.remove()
+        
              console.log(button.innerText)
              userChoices.spell = spell.spell
              console.log(userChoices)
@@ -230,11 +278,7 @@ let h1 = document.createElement("h5")
 h1.innerText = house.house
 let emoji = document.createElement("p")
 emoji.innerText = house.emoji
-// let p = document.createElement("p")
-// console.log(house.points)
-// p.innerText = house.points
-// let ptwo = document.createElement("p")
-// ptwo.innerText = house.house
+
 let button = document.createElement("button")
 // housecard.appendChild(p)
 housecard.appendChild(h1)
@@ -266,7 +310,33 @@ function loadHouseStanding(house) {
      let h1 = document.createElement("h1")
 console.log(house.points)
 h1.innerText = house.points
+
+ let h2 = document.createElement("h2")
+h2.innerText = "points"
+
+let button = document.createElement("button")
+button.className = "add-btn"
+button.innerText = "+ 1 point"
+
+button.addEventListener("click", () => {
+house.addPoints(1)
+h1.innerText = house.points
+
+})
+
+let buttontwo = document.createElement("button")
+buttontwo.innerText = "- 1 point"
+
+buttontwo.addEventListener("click", () => {
+house.removePoints(1)
+h1.innerText = house.points
+
+})
+button.className = "minus-btn"
+card.appendChild(h2)
 card.appendChild(h1)
+card.appendChild(button)
+card.appendChild(buttontwo)
 
 
 }

@@ -6,6 +6,10 @@
 
 
 #charContainer {
+     border-style: solid;
+    border-width: thin;
+    border-color: goldenrod;
+    border-radius: 25px;
     display: flex;
     flex-direction: row;
     
@@ -26,11 +30,12 @@ border-radius: 25px;
 }
 
 .card {
-   padding: 50px;
+   padding: 20px;
     background-color: rgb(16, 12, 42);
     border-style: solid;
     border-width: thin;
     border-color: goldenrod;
+    border-radius: 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -93,7 +98,7 @@ border-radius: 25px;
 .house-container {
     width:100%;
     display: flex;
-background-color: rgb(46, 28, 111);
+background-color: rgb(11, 3, 42);
 gap: 10px;
 }
 
@@ -104,48 +109,62 @@ width: 100px;
 }
 
 .house-standing {
+    padding: 20px;
+    text-align: center;
+    border-radius: 25px;
    color: goldenrod;
     width: 400px;
-    height: 100%;
-    background-color: rgb(46, 28, 111);
+    height: auto;
+   background-color: rgb(11, 3, 42);
+   border-style: solid;
+    border-width: thin;
+    border-color: goldenrod;
+    border-radius: 25px;
 }
 
 .main {
     display: flex;
-    
+    gap: 10px;
     justify-content: center;
     align-items: center;
 }
 
 .hogwart-manager {
-   background-color: rgb(46, 28, 111);
-    width: 30%;
+    border-style: solid;
+    border-width: thin;
+    border-color: goldenrod;
+    border-radius: 25px;
+    background-color: rgb(11, 3, 42);
+    width: 20%;
     height: 100%;
+    color: goldenrod;
 }
 
 .griff {
     display: flex;
     justify-content: center;
     align-items: center;
-background-color: rgb(48, 12, 12);
-width: 100%;
- border-style: solid;
+    background-color: rgb(48, 12, 12);
+    width: 100%;
+    border-style: solid;
     border-width: thin;
     border-color: goldenrod;
     border-radius: 25px;
     color: goldenrod;
+    gap: 20px;
 }
 
 .slyth {
     display: flex;
     justify-content: center;
     align-items: center;
-background-color: rgb(5, 55, 8);
- border-style: solid;
+    background-color: rgb(5, 55, 8);
+    border-style: solid;
     border-width: thin;
     border-color: goldenrod;
     border-radius: 25px;
     color: goldenrod;
+    gap: 20px;
 
 }
 
@@ -153,12 +172,13 @@ background-color: rgb(5, 55, 8);
     display: flex;
     justify-content: center;
     align-items: center;
-background-color: rgb(1, 1, 37);
- border-style: solid;
+    background-color: rgb(1, 1, 37);
+    border-style: solid;
     border-width: thin;
     border-color: goldenrod;
     border-radius: 25px;
     color: goldenrod;
+    gap: 20px;
 
 }
 
@@ -166,8 +186,8 @@ background-color: rgb(1, 1, 37);
     display: flex;
     justify-content: center;
     align-items: center;
-background-color: darkgoldenrod;
- border-style: solid;
+    background-color: darkgoldenrod;
+    border-style: solid;
     border-width: thin;
     border-color: goldenrod;
     border-radius: 25px;
@@ -179,3 +199,38 @@ background-color: darkgoldenrod;
     width:100px;
     height: 100px;
 }
+
+.minus-btn {
+    background-color: red;
+}
+
+.add-btn {
+    background-color: green;
+}
+
+button {
+    border-radius: 25px;
+}
+
+.nav {
+     border-style: solid;
+    border-width: thin;
+    border-color: goldenrod;
+    border-radius: 25px;
+    display: flex;
+  
+    display: flex;
+    
+    padding: 50px;
+    gap: 700px;
+    height: 150px;
+    color: goldenrod;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+/* .nothidden {
+    visibility: 
+} */
