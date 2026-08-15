@@ -7,6 +7,7 @@ class Character {
     this.house = character.hogwartsHouse;
     this.image = character.image;
     this.points = 0;
+    this.assignments = []
   }
 
   addPoints(amount) {
@@ -45,14 +46,19 @@ document.addEventListener("DOMContentLoaded", () => {
     let bookContainer = document.getElementById(("book-container"))
     let houseContainer = document.getElementById(("house-container"))
     let houseStanding = document.getElementById("house-standing")
+    let bookwrap = document.getElementById("book-wrap")
+    let characterSelect = document.getElementById("character-select")
+     
     let characters, spells, houses, books
     // const userChoices = {
     //     spell: "",
     //     house: "",
     //     book: "",
     // }
-    let likedCharacters = JSON.parse(localStorage.getItem("liked")) || []
-    let likedContainer = document.getElementById("liked-container")
+
+    // let likedCharacters = JSON.parse(localStorage.getItem("liked")) || []
+    // let likedContainer = document.getElementById("liked-container")
+
     // let spellbutton = document.getElementById("spell-button")
     // spellbutton.addEventListener("click", () => {
     //          console.log(spellbutton.innerText)
@@ -79,9 +85,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return new Character(char)
        })
 
-    // characters = json
+    
       characters.forEach((char) => {
        loadCharacterCards(char)
+       loadCharacterSelect(char)
       })
       })
     
@@ -91,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
   .then((json) => {
     console.log(json);
     spells = json
-    spells.slice(0, 10).forEach((spell) => {
+    spells.slice(0, 9).forEach((spell) => {
      loadSpells(spell)
     })
     
@@ -118,6 +125,10 @@ document.addEventListener("DOMContentLoaded", () => {
   .then((json) => {
     books = json;
     console.log(books);
+    books.slice(0,6).forEach((book) => {
+        loadBooksContainer(book)
+    })
+    
   });
 
 
@@ -143,18 +154,23 @@ likedCharacters.forEach((char) => {
       })
 })
 
-let select = document.createElement("select")
-select.addEventListener("change", () => {
-  console.log(select.value)
-  character.hogwartsHouse = select.value
-})
-select.className = "select hidden"
-houses?.forEach((house) => {
-  select.classList.remove("hidden")
-    let option = document.createElement("option")
-    option.innerText = house.name
-    select.appendChild(option)
-})
+// let select = document.createElement("select")
+// select.className = "select hidden"
+// select.addEventListener("change", () => {
+//   // select.classList.add("hidden")
+//   console.log(select.value)
+//   house.innerText = select.value
+//   character.hogwartsHouse = select.value
+//   loadCharacterCards(character)
+// })
+
+
+// houses?.forEach((house) => {
+//   select.classList.remove("hidden")
+//     let option = document.createElement("option")
+//     option.innerText = house.name
+//     select.appendChild(option)
+// })
 
 let h1 = document.createElement("h1")
 
@@ -191,9 +207,31 @@ console.log(character)
 
 })
 
+let select = document.createElement("select")
+select.className = "select hidden"
+select.addEventListener("change", () => {
+  // select.classList.add("hidden")
+  console.log(select.value)
+  house.innerText = select.value
+  character.hogwartsHouse = select.value
+  loadCharacterCards(character)
+})
+
+houses?.forEach((house) => {
+  // select.classList.remove("hidden")
+    let option = document.createElement("option")
+    option.innerText = house.name
+    select.appendChild(option)
+})
+
+
  let buttonfour = document.createElement("button")
  buttonfour.addEventListener("click", () => {
-   
+  if (select.classList.contains("hidden")) {
+   select.classList.remove("hidden")
+  } else {
+    select.classList.add("hidden")
+  }
  })
 buttonfour.innerText = "change house"
 
@@ -216,34 +254,34 @@ buttonfour.innerText = "change house"
 
 }
 
-function loadLikedCharacters(character) {
+// function loadLikedCharacters(character) {
    
-    console.log(character)
-    console.log("liked container")
-    console.log(character.image)
-    let card = document.createElement("div")
-    card.className = "liked-card"
-    let button = document.createElement("button")
-    button.addEventListener("click", () => {
-        console.log("deleting")
-       likedCharacters = likedCharacters.filter((char) => char.id !== character.id)
-       localStorage.setItem("liked", JSON.stringify(likedCharacters))
-       card.remove()
-       likedCharacters.forEach((char) => loadLikedCharacters(char))
+//     console.log(character)
+//     console.log("liked container")
+//     console.log(character.image)
+//     let card = document.createElement("div")
+//     card.className = "liked-card"
+//     let button = document.createElement("button")
+//     button.addEventListener("click", () => {
+//         console.log("deleting")
+//        likedCharacters = likedCharacters.filter((char) => char.id !== character.id)
+//        localStorage.setItem("liked", JSON.stringify(likedCharacters))
+//        card.remove()
+//        likedCharacters.forEach((char) => loadLikedCharacters(char))
       
-    })
-    button.innerText = "delete"
-    let p = document.createElement("p")
-    let image = document.createElement("img")
-   image.className = "chartwo-image"
-   image.src = character.image
-    p.innerText = character.nickname
-    card.appendChild(button)
-    card.appendChild(image)
-    card.appendChild(p)
-    likedContainer.appendChild(card)
+//     })
+//     button.innerText = "delete"
+//     let p = document.createElement("p")
+//     let image = document.createElement("img")
+//    image.className = "chartwo-image"
+//    image.src = character.image
+//     p.innerText = character.nickname
+//     card.appendChild(button)
+//     card.appendChild(image)
+//     card.appendChild(p)
+//     likedContainer.appendChild(card)
 
-}
+// }
 
 function loadSpells(spell) {
 console.log(spell)
@@ -257,11 +295,11 @@ button.innerText = `${spell.spell} \n\n ${spell.use}`
 
 
     button.addEventListener("click", () => {
-        spellsContainer.innerText = ""
+        // spellsContainer.innerText = ""
         
-             console.log(button.innerText)
-             userChoices.spell = spell.spell
-             console.log(userChoices)
+        //      console.log(button.innerText)
+        //      userChoices.spell = spell.spell
+        //      console.log(userChoices)
              
     })
 
@@ -339,6 +377,25 @@ card.appendChild(button)
 card.appendChild(buttontwo)
 
 
+}
+
+
+
+function loadBooksContainer(book) {
+console.log(book)
+// let div = document.createElement("div")
+// div.className = "book-wrap"
+let image = document.createElement("img")
+image.className = "book-image"
+image.src = book.cover
+bookwrap.appendChild(image)
+// bookContainer.appendChild(div)
+}
+
+function loadCharacterSelect(char) {
+  let option = document.createElement("option")
+  option.innerText = char.name
+  characterSelect.appendChild(option)
 }
 
 })
