@@ -6,21 +6,51 @@ class Character {
     this.nickname = character.nickname;
     this.house = character.hogwartsHouse;
     this.image = character.image;
-    this.points = 0;
+
+    const savedData = localStorage.getItem(`character-${this.name}`)
+
+  if (savedData) {
+    const data = JSON.parse(savedData)
+    this.points = data.points
+    this.assignments = data.assignments
+    this.house = data.house
+  } else {
+    this.points = 0
     this.assignments = []
+  }
+    
   }
 
   addPoints(amount) {
     this.points += amount;
+    this.save()
   }
 
   removePoints(amount) {
     this.points -= amount;
+    this.save()
   }
 
   changeHouse(house) {
     this.house = house;
+    this.save()
   }
+
+  addAssignment(spell) {
+    this.assignments.push(spell)
+    this.save()
+  }
+
+  save() {
+     localStorage.setItem(`character-${this.name}`, JSON.stringify({
+        points: this.points,
+        assignments: this.assignments,
+        house: this.house
+      })
+    );
+  }
+
+  
 }
 
 
@@ -48,22 +78,26 @@ document.addEventListener("DOMContentLoaded", () => {
     let houseStanding = document.getElementById("house-standing")
     let bookwrap = document.getElementById("book-wrap")
     let characterSelect = document.getElementById("character-select")
+    let selectedCharacter
+    let assignment
+
+    characterSelect.addEventListener("change", () => {
+      console.log(characterSelect.value)
+      selectedCharacter = characterSelect.value
+    })
      
     let characters, spells, houses, books
-    // const userChoices = {
-    //     spell: "",
-    //     house: "",
-    //     book: "",
-    // }
+    
 
-    // let likedCharacters = JSON.parse(localStorage.getItem("liked")) || []
-    // let likedContainer = document.getElementById("liked-container")
-
-    // let spellbutton = document.getElementById("spell-button")
-    // spellbutton.addEventListener("click", () => {
-    //          console.log(spellbutton.innerText)
+    let spellbutton = document.getElementById("spell-button")
+    spellbutton.addEventListener("click", () => {
+             console.log("adding assignment")
+             console.log(assignment)
+             let character = characters.find((char) => char.name === selectedCharacter)
+             character.addAssignment(assignment)
+             loadCharacterCards(character)
              
-    // })
+    })
 
     let input = document.getElementById("search")
     input.addEventListener("input", () => {
@@ -154,48 +188,37 @@ likedCharacters.forEach((char) => {
       })
 })
 
-// let select = document.createElement("select")
-// select.className = "select hidden"
-// select.addEventListener("change", () => {
-//   // select.classList.add("hidden")
-//   console.log(select.value)
-//   house.innerText = select.value
-//   character.hogwartsHouse = select.value
-//   loadCharacterCards(character)
-// })
 
 
-// houses?.forEach((house) => {
-//   select.classList.remove("hidden")
-//     let option = document.createElement("option")
-//     option.innerText = house.name
-//     select.appendChild(option)
-// })
+      let h1 = document.createElement("h1")
 
-let h1 = document.createElement("h1")
-
-h1.innerText = character.nickname
-let house = document.createElement("p")
-house.innerText = character.house
-    let div = document.createElement("div")
-    div.className = "card"
+      h1.innerText = character.nickname
+      let house = document.createElement("p")
+      house.innerText = character.house
+      let div = document.createElement("div")
+      div.className = "card"
     
-    let p = document.createElement("p")
-    p.innerText = character.name
+      let p = document.createElement("p")
+      p.innerText = character.name
     
-   let image = document.createElement("img")
-   image.className = "char-image"
-   image.src = character.image
+     let image = document.createElement("img")
+     image.className = "char-image"
+     image.src = character.image
 
-     let ptwo = document.createElement("p")
+    let ptwo = document.createElement("p")
     ptwo.innerText = character.points
+    console.log(character.assignments)
+    let pthree = document.createElement("p")
+    pthree.innerText = character.assignments.join(", ")
 
-   let buttontwo = document.createElement("button")
-buttontwo.innerText = "+ 1 point"
-buttontwo.addEventListener("click", () => {
-character.addPoints(1)
-ptwo.innerText = character.points
-console.log(character)
+    let label = document.createElement("label")
+    label.innerText = "Assignments:"
+    let buttontwo = document.createElement("button")
+    buttontwo.innerText = "+ 1 point"
+    buttontwo.addEventListener("click", () => {
+    character.addPoints(1)
+    ptwo.innerText = character.points
+    console.log(character)
 })
 
  let buttonthree = document.createElement("button")
@@ -213,7 +236,7 @@ select.addEventListener("change", () => {
   // select.classList.add("hidden")
   console.log(select.value)
   house.innerText = select.value
-  character.hogwartsHouse = select.value
+  character.changeHouse(select.value)
   loadCharacterCards(character)
 })
 
@@ -244,6 +267,8 @@ buttonfour.innerText = "change house"
    div.appendChild(house)
    div.appendChild(ptwo)
    div.appendChild(p)
+   div.appendChild(label)
+   div.appendChild(pthree)
    div.appendChild(buttonthree)
    div.appendChild(buttontwo)
    div.appendChild(buttonfour)
@@ -254,34 +279,8 @@ buttonfour.innerText = "change house"
 
 }
 
-// function loadLikedCharacters(character) {
-   
-//     console.log(character)
-//     console.log("liked container")
-//     console.log(character.image)
-//     let card = document.createElement("div")
-//     card.className = "liked-card"
-//     let button = document.createElement("button")
-//     button.addEventListener("click", () => {
-//         console.log("deleting")
-//        likedCharacters = likedCharacters.filter((char) => char.id !== character.id)
-//        localStorage.setItem("liked", JSON.stringify(likedCharacters))
-//        card.remove()
-//        likedCharacters.forEach((char) => loadLikedCharacters(char))
-      
-//     })
-//     button.innerText = "delete"
-//     let p = document.createElement("p")
-//     let image = document.createElement("img")
-//    image.className = "chartwo-image"
-//    image.src = character.image
-//     p.innerText = character.nickname
-//     card.appendChild(button)
-//     card.appendChild(image)
-//     card.appendChild(p)
-//     likedContainer.appendChild(card)
 
-// }
+
 
 function loadSpells(spell) {
 console.log(spell)
@@ -295,13 +294,18 @@ button.innerText = `${spell.spell} \n\n ${spell.use}`
 
 
     button.addEventListener("click", () => {
-        // spellsContainer.innerText = ""
-        
-        //      console.log(button.innerText)
-        //      userChoices.spell = spell.spell
-        //      console.log(userChoices)
-             
-    })
+      console.log(button.innerText)
+      if (button.style.background === "green") {
+         button.style.background = "navy"
+      } else {
+        button.style.background = "green"
+        assignment = spell.spell
+      }
+      
+     })
+
+
+      
 
 spellsdiv.appendChild(button)
 

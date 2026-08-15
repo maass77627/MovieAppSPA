@@ -72,6 +72,7 @@ border-radius: 25px;
 }
 
 .spell-container {
+    margin-top: 10px;
     background-color: rgb(11, 3, 42);
     border-style: solid;
     border-width: thin;
@@ -83,7 +84,7 @@ border-radius: 25px;
     align-items: center;
     /* flex-wrap: wrap; */
     
-    width: 60%;
+    width: 70%;
     color: goldenrod;
     border-radius: 20px;
     gap:10px;
@@ -99,7 +100,7 @@ border-radius: 25px;
     
     width: 30%;
     border-radius: 25px;
-    background-color: rgb(11, 2, 46);
+    background-color: navy;
     color: aliceblue;
 }
 
@@ -239,7 +240,7 @@ button {
     border-radius: 25px;
     display: flex;
   
-    display: flex;
+    
     
     padding: 50px;
     gap: 700px;
@@ -253,8 +254,8 @@ button {
 
 .book-container {
     margin-top: 10px;
-    width: 30%;
-    max-height: 300px;
+    width: 40%;
+    /* max-height: 300px; */
     border-style: solid;
     border-width: thin;
     border-color: goldenrod;
@@ -287,7 +288,7 @@ button {
 .spell-book {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 20px;
     width: 100%;
 }
@@ -297,6 +298,4 @@ button {
     width: 200px;
 }
 
-/* .nothidden {
-    visibility: 
-} */
+
