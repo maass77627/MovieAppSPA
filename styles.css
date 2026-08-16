@@ -303,14 +303,41 @@ button {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    height: 200px;
+    width: 100%;
+    height: auto;
    background-color: rgb(1, 1, 37);
+   color: goldenrod;
 }
 
 .navbar div {
     display: flex;
-   background-color: rgb(69, 69, 100);
+    flex-direction: column;
+    background-color: rgb(1, 1, 37);
+     border-style: solid;
+    border-width: thin;
+    border-color: goldenrod;
+    border-radius: 25px;
+    padding: 10px;
     
-    
+}
+
+.navbar label {
+    font-weight: bold;
+}
+
+.point-leader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+ .timer-div {
+   width: 100%;
+} 
+
+.total-students {
+    width: 100%;
 }
 

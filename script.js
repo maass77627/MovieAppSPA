@@ -1,6 +1,34 @@
 console.log("SCRIPT IS WORKING");
 
+class Timer {
+  constructor(seconds, timerDiv) {
+    this.seconds = seconds;
+    this.timerDiv = timerDiv
+    this.interval = null;
+  }
+
+  start() {
+    this.interval = setInterval(() => {
+      this.seconds--;
+      this.timerDiv.innerText = this.seconds
+        
+      console.log(this.seconds);
+
+      if (this.seconds <= 0) {
+        this.stop();
+        console.log("Time's up!");
+      }
+    }, 1000);
+  }
+
+  stop() {
+    clearInterval(this.interval);
+    this.interval = null;
+  }
+}
+
 class Character {
+  static all = []
   constructor(character) {
     this.name = character.fullName;
     this.nickname = character.nickname;
@@ -18,6 +46,9 @@ class Character {
     this.points = 0
     this.assignments = []
   }
+
+  Character.all.push(this)
+  
     
   }
 
@@ -50,15 +81,27 @@ class Character {
     );
   }
 
+  static highestScore() {
+  let newcharacter = Character.all.reduce((highest, character) => {
+    return character.points > highest.points ? character : highest;
+  });
+
+  return newcharacter.name;
+}
+
   
 }
 
 
 class House {
+  static all = []
+ 
+
   constructor(house) {
     this.name = house.house;
     this.emoji = house.emoji;
     this.points = 0;
+    House.all.push(this)
   }
 
   addPoints(amount) {
@@ -68,6 +111,14 @@ class House {
   removePoints(amount) {
     this.points -= amount;
   }
+static highestScore() {
+  let newhouse = House.all.reduce((highest, house) => {
+    return house.points > highest.points ? house : highest;
+  });
+
+  return newhouse.name;
+}
+ 
 }
 
 
@@ -77,13 +128,31 @@ document.addEventListener("DOMContentLoaded", () => {
     let spellsContainer = document.getElementById(("spell-container"))
     let bookContainer = document.getElementById(("book-container"))
     let houseContainer = document.getElementById(("house-container"))
-   
+   let timerDiv = document.getElementById("timer")
     let houseStanding = document.getElementById("house-standing")
+    let pointLeader = document.getElementById("point-leader")
     let bookwrap = document.getElementById("book-wrap")
     let characterSelect = document.getElementById("character-select")
+    let timerWrap = document.getElementById("timer-div")
+    let houseCount = document.getElementById("house-count")
+    // houseCount.innerText = House.all.length;
+    let characterCount = document.getElementById("character-count")
+    // characterCount.innerText = Character.all.length
     let selectedCharacter
     let assignment
+      const timer = new Timer(60, timerDiv);
+      const stopButton = document.createElement("button")
+      stopButton.innerText = "stop"
+      const startButton = document.createElement("button")
+       startButton.innerText = "start"
+       startButton.addEventListener("click", () => timer.start())
+        stopButton.addEventListener("click", () => timer.stop())
+       timerWrap.appendChild(startButton)
+       timerWrap.appendChild(stopButton)
 
+      // timerDiv.innerText = timer.seconds
+      // timer.start()
+       timer.stop()
     characterSelect.addEventListener("change", () => {
       console.log(characterSelect.value)
       selectedCharacter = characterSelect.value
@@ -117,16 +186,21 @@ document.addEventListener("DOMContentLoaded", () => {
    fetch("https://potterapi-fedeperin.vercel.app/en/characters")
    .then((res) => res.json())
    .then((json) => {console.log(json)
-
+         
        characters = json.map((char) => {
         return new Character(char)
        })
-
+       characterCount.innerText = Character.all.length;
     
       characters.forEach((char) => {
        loadCharacterCards(char)
        loadCharacterSelect(char)
+       
       })
+      console.log("Character.all:", Character.all)
+console.log("characters:", characters)
+      loadPointLeaders()
+     
       })
     
 
@@ -149,11 +223,14 @@ document.addEventListener("DOMContentLoaded", () => {
       return new House(house)
     })
     // houses = json;
+    houseCount.innerText = House.all.length;
     console.log(houses);
     houses.forEach((house) => {
       // loadHouses(house)
       loadHouseStanding(house)
     })
+    // loadPointLeaders()
+    
     // loadHouses(house)
   });
 
@@ -403,6 +480,21 @@ function loadCharacterSelect(char) {
   let option = document.createElement("option")
   option.innerText = char.name
   characterSelect.appendChild(option)
+}
+
+function loadPointLeaders() {
+  let label = document.createElement("label")
+  label.innerText =  "Student:"
+   let labeltwo = document.createElement("label")
+   labeltwo.innerText =  "House:"
+  let hp = document.createElement("p")
+  hp.innerText =  Character.highestScore()
+  let ptwo = document.createElement("p")
+  ptwo.innerText = House.highestScore()
+  pointLeader.appendChild(label)
+ pointLeader.appendChild(hp)
+ pointLeader.appendChild(labeltwo)
+ pointLeader.appendChild(ptwo)
 }
 
 })
