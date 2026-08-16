@@ -222,11 +222,11 @@ width: 100px;
 }
 
 .minus-btn {
-    background-color: rgb(13, 155, 1);
+    background-color: red;
 }
 
 .add-btn {
-    background-color: rgb(128, 0, 2);
+    background-color: rgb(16, 114, 3);
 }
 
 button {
@@ -298,4 +298,19 @@ button {
     width: 200px;
 }
 
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 200px;
+   background-color: rgb(1, 1, 37);
+}
+
+.navbar div {
+    display: flex;
+   background-color: rgb(69, 69, 100);
+    
+    
+}
 

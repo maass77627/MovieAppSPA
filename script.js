@@ -70,11 +70,14 @@ class House {
   }
 }
 
+
+
 document.addEventListener("DOMContentLoaded", () => {     
     let characterContainer = document.getElementById(("charContainer"))
     let spellsContainer = document.getElementById(("spell-container"))
     let bookContainer = document.getElementById(("book-container"))
     let houseContainer = document.getElementById(("house-container"))
+   
     let houseStanding = document.getElementById("house-standing")
     let bookwrap = document.getElementById("book-wrap")
     let characterSelect = document.getElementById("character-select")
@@ -148,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // houses = json;
     console.log(houses);
     houses.forEach((house) => {
-      loadHouses(house)
+      // loadHouses(house)
       loadHouseStanding(house)
     })
     // loadHouses(house)
@@ -313,23 +316,23 @@ spellsdiv.appendChild(button)
 }
 
 
-function loadHouses(house) {
-let housecard = document.createElement("div")
-housecard.className = "house-card"
-let h1 = document.createElement("h5")
-h1.innerText = house.house
-let emoji = document.createElement("p")
-emoji.innerText = house.emoji
+// function loadHouses(house) {
+// let housecard = document.createElement("div")
+// housecard.className = "house-card"
+// let h1 = document.createElement("h5")
+// h1.innerText = house.house
+// let emoji = document.createElement("p")
+// emoji.innerText = house.emoji
 
-let button = document.createElement("button")
-// housecard.appendChild(p)
-housecard.appendChild(h1)
-housecard.appendChild(emoji)
-houseContainer.appendChild(housecard)
+// let button = document.createElement("button")
+// // housecard.appendChild(p)
+// housecard.appendChild(h1)
+// housecard.appendChild(emoji)
+// houseContainer.appendChild(housecard)
 
 
 
-}
+// }
 
 function loadHouseStanding(house) {
     let card
@@ -374,7 +377,7 @@ house.removePoints(1)
 h1.innerText = house.points
 
 })
-button.className = "minus-btn"
+buttontwo.className = "minus-btn"
 card.appendChild(h2)
 card.appendChild(h1)
 card.appendChild(button)
