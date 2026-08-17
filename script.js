@@ -1,5 +1,8 @@
 console.log("SCRIPT IS WORKING");
 
+
+
+
 class Timer {
   constructor(seconds, timerDiv) {
     this.seconds = seconds;
@@ -27,10 +30,35 @@ class Timer {
   }
 }
 
-class Character {
+
+
+class PointClass {
+  constructor(name) {
+    this.points = points
+    this.name = name
+
+  }
+
+
+  addPoints(amount) {
+    this.points += amount;
+    this.save()
+  }
+
+  removePoints(amount) {
+    this.points -= amount;
+    this.save()
+  }
+
+ 
+
+
+}
+
+class Character extends PointClass {
   static all = []
   constructor(character) {
-    this.name = character.fullName;
+    super(character.fullName)
     this.nickname = character.nickname;
     this.house = character.hogwartsHouse;
     this.image = character.image;
@@ -52,15 +80,7 @@ class Character {
     
   }
 
-  addPoints(amount) {
-    this.points += amount;
-    this.save()
-  }
-
-  removePoints(amount) {
-    this.points -= amount;
-    this.save()
-  }
+ 
 
   changeHouse(house) {
     this.house = house;
@@ -93,24 +113,32 @@ class Character {
 }
 
 
-class House {
+class House extends PointClass {
   static all = []
  
 
   constructor(house) {
-    this.name = house.house;
+    super(house.house)
     this.emoji = house.emoji;
-    this.points = 0;
+    let data = localStorage.getItem(`house-${this.name}`)
+    if (data) {
+      let newdata = JSON.parse(data)
+      this.points = newdata.points
+    } else {
+      this.points = 0;
+    }
+    
     House.all.push(this)
   }
 
-  addPoints(amount) {
-    this.points += amount;
+
+  save() {
+    localStorage.setItem(`house-${this.name}`, JSON.stringify({
+        points: this.points,
+
+    }))
   }
 
-  removePoints(amount) {
-    this.points -= amount;
-  }
 static highestScore() {
   let newhouse = House.all.reduce((highest, house) => {
     return house.points > highest.points ? house : highest;
@@ -128,16 +156,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let spellsContainer = document.getElementById(("spell-container"))
     let bookContainer = document.getElementById(("book-container"))
     let houseContainer = document.getElementById(("house-container"))
-   let timerDiv = document.getElementById("timer")
+    let timerDiv = document.getElementById("timer")
     let houseStanding = document.getElementById("house-standing")
     let pointLeader = document.getElementById("point-leader")
     let bookwrap = document.getElementById("book-wrap")
     let characterSelect = document.getElementById("character-select")
     let timerWrap = document.getElementById("timer-div")
     let houseCount = document.getElementById("house-count")
-    // houseCount.innerText = House.all.length;
+    
     let characterCount = document.getElementById("character-count")
-    // characterCount.innerText = Character.all.length
+    
     let selectedCharacter
     let assignment
       const timer = new Timer(60, timerDiv);
@@ -150,8 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
        timerWrap.appendChild(startButton)
        timerWrap.appendChild(stopButton)
 
-      // timerDiv.innerText = timer.seconds
-      // timer.start()
        timer.stop()
     characterSelect.addEventListener("change", () => {
       console.log(characterSelect.value)
@@ -198,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
        
       })
       console.log("Character.all:", Character.all)
-console.log("characters:", characters)
+      console.log("characters:", characters)
       loadPointLeaders()
      
       })
@@ -226,12 +252,10 @@ console.log("characters:", characters)
     houseCount.innerText = House.all.length;
     console.log(houses);
     houses.forEach((house) => {
-      // loadHouses(house)
+     
       loadHouseStanding(house)
     })
-    // loadPointLeaders()
     
-    // loadHouses(house)
   });
 
   fetch("https://potterapi-fedeperin.vercel.app/en/books")
@@ -301,7 +325,7 @@ likedCharacters.forEach((char) => {
     console.log(character)
 })
 
- let buttonthree = document.createElement("button")
+let buttonthree = document.createElement("button")
 buttonthree.innerText = "- 1 point"
 buttonthree.addEventListener("click", () => {
 character.removePoints(1)
@@ -313,7 +337,7 @@ console.log(character)
 let select = document.createElement("select")
 select.className = "select hidden"
 select.addEventListener("change", () => {
-  // select.classList.add("hidden")
+ 
   console.log(select.value)
   house.innerText = select.value
   character.changeHouse(select.value)
@@ -321,7 +345,7 @@ select.addEventListener("change", () => {
 })
 
 houses?.forEach((house) => {
-  // select.classList.remove("hidden")
+  
     let option = document.createElement("option")
     option.innerText = house.name
     select.appendChild(option)
@@ -393,23 +417,7 @@ spellsdiv.appendChild(button)
 }
 
 
-// function loadHouses(house) {
-// let housecard = document.createElement("div")
-// housecard.className = "house-card"
-// let h1 = document.createElement("h5")
-// h1.innerText = house.house
-// let emoji = document.createElement("p")
-// emoji.innerText = house.emoji
 
-// let button = document.createElement("button")
-// // housecard.appendChild(p)
-// housecard.appendChild(h1)
-// housecard.appendChild(emoji)
-// houseContainer.appendChild(housecard)
-
-
-
-// }
 
 function loadHouseStanding(house) {
     let card
@@ -442,6 +450,7 @@ button.innerText = "+ 1 point"
 
 button.addEventListener("click", () => {
 house.addPoints(1)
+localStorage.setItem(`character-${this.name}`)
 h1.innerText = house.points
 
 })
@@ -467,13 +476,12 @@ card.appendChild(buttontwo)
 
 function loadBooksContainer(book) {
 console.log(book)
-// let div = document.createElement("div")
-// div.className = "book-wrap"
+
 let image = document.createElement("img")
 image.className = "book-image"
 image.src = book.cover
 bookwrap.appendChild(image)
-// bookContainer.appendChild(div)
+
 }
 
 function loadCharacterSelect(char) {
